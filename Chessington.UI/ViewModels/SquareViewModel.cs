@@ -6,7 +6,6 @@ using Chessington.GameEngine;
 using Chessington.UI.Caliburn.Micro;
 using Chessington.UI.Factories;
 using Chessington.UI.Notifications;
-using Chessington.UI.Properties;
 
 namespace Chessington.UI.ViewModels
 {
@@ -98,7 +97,6 @@ namespace Chessington.UI.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
