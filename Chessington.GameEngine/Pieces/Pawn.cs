@@ -10,7 +10,20 @@ namespace Chessington.GameEngine.Pieces
 
         public override IEnumerable<Square> GetAvailableMoves(Board board)
         {
-            return Enumerable.Empty<Square>();
+            var moves = new List<Square>();
+            var pawn = board.FindPiece(this);
+
+            switch (Player)
+            {
+                case Player.White:
+                    moves.Add(Square.At(pawn.Row - 1, pawn.Col));
+                    break;
+                case Player.Black:
+                    moves.Add(Square.At(pawn.Row + 1, pawn.Col));
+                    break;
+            }
+
+            return moves;
         }
     }
 }
