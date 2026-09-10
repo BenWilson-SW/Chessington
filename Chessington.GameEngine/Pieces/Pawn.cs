@@ -16,7 +16,31 @@ namespace Chessington.GameEngine.Pieces
             var direction = Player == Player.White ? -1 : 1;
             var startRow = Player == Player.White ? 6 : 1;
 
-            var move = Square.At(pawn.Row + direction, pawn.Col);
+            var move = Square.At(pawn.Row + direction, pawn.Col + 1);
+
+            if (board.InBounds(move))
+            {
+                var piece = board.GetPiece(move);
+                
+                if (piece != null && piece.Player != Player)
+                {
+                    moves.Add(move);
+                }
+            }
+            
+            move = Square.At(pawn.Row + direction, pawn.Col - 1);
+
+            if (board.InBounds(move))
+            {
+                var piece = board.GetPiece(move);
+                
+                if (piece != null && piece.Player != Player)
+                {
+                    moves.Add(move);
+                }
+            }
+
+            move = Square.At(pawn.Row + direction, pawn.Col);
             
             if (!board.InBounds(move) || board.GetPiece(move) != null)
             {
