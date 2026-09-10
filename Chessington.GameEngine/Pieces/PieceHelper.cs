@@ -5,48 +5,72 @@ namespace Chessington.GameEngine.Pieces;
 
 public class PieceHelper
 {
-    public static IEnumerable<Square> GetAvailableLateralMoves(Board board, Square from)
+    public static IEnumerable<Square> GetAvailableLateralMoves(Player player, Board board, Square from)
     {
         var moves = new List<Square>();
 
-        for (int col = 0; col < from.Col; col++)
+        for (var col = 0; col < from.Col; col++)
         {
             var move = Square.At(from.Row, col);
-            if (board.GetPiece(move) != null)
+            var piece = board.GetPiece(move);
+            if (piece != null)
             {
+                if (piece.Player != player)
+                {
+                    moves.Add(move);                    
+                }
+
                 break;
             }
             
             moves.Add(move);
         }
             
-        for (int col = from.Col + 1; col < 8; col++)
+        for (var col = from.Col + 1; col < 8; col++)
         {
             var move = Square.At(from.Row, col);
-            if (board.GetPiece(move) != null)
+            var piece = board.GetPiece(move);
+            if (piece != null)
             {
+                if (piece.Player != player)
+                {
+                    moves.Add(move);                    
+                }
+                
                 break;
             }
             
             moves.Add(move);
         }
             
-        for (int row = 0; row < from.Row; row++)
+        for (var row = 0; row < from.Row; row++)
         {
             var move = Square.At(row, from.Col);
-            if (board.GetPiece(move) != null)
+            var piece = board.GetPiece(move);
+            if (piece != null)
             {
+                if (piece.Player != player)
+                {
+                    moves.Add(move);                    
+                }
+                
                 break;
             }
             
             moves.Add(move);
         }
             
-        for (int row = from.Row + 1; row < 8; row++)
+        for (var row = from.Row + 1; row < 8; row++)
         {
             var move = Square.At(row, from.Col);
-            if (board.GetPiece(move) != null)
+            var piece = board.GetPiece(move);
+            if (piece != null)
             {
+                if (piece.Player != player)
+                {
+                    moves.Add(move);                    
+                }
+                
                 break;
             }
             

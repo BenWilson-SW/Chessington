@@ -15,6 +15,7 @@ namespace Chessington.GameEngine.Pieces
             
             moves = moves.Concat(PieceHelper.GetAvailableLateralMoves(board, queen));
             moves = moves.Concat(PieceHelper.GetAvailableDiagonalMoves(board, queen));
+            moves = moves.Concat(PieceHelper.GetAvailableLateralMoves(Player, board, queen));
             
             return moves;
         }
