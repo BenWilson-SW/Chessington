@@ -80,15 +80,21 @@ public class PieceHelper
         return moves;        
     }
     
-    public static IEnumerable<Square> GetAvailableDiagonalMoves(Board board, Square from)
+    public static IEnumerable<Square> GetAvailableDiagonalMoves(Player player, Board board, Square from)
     {
         var moves = new List<Square>();
             
         for (int i = 1; i <= Math.Min(7 - from.Row, 7 - from.Col); i++)
         {
             var move = Square.At(from.Row + i, from.Col + i);
-            if (board.GetPiece(move) != null)
+            var piece = board.GetPiece(move);
+            if (piece != null)
             {
+                if (piece.Player != player)
+                {
+                    moves.Add(move);                    
+                }
+                
                 break;
             }
             
@@ -98,8 +104,14 @@ public class PieceHelper
         for (int i = 1; i <= Math.Min(7 - from.Row, from.Col); i++)
         {
             var move = Square.At(from.Row + i, from.Col - i);
-            if (board.GetPiece(move) != null)
+            var piece = board.GetPiece(move);
+            if (piece != null)
             {
+                if (piece.Player != player)
+                {
+                    moves.Add(move);                    
+                }
+                
                 break;
             }
             
@@ -109,8 +121,14 @@ public class PieceHelper
         for (int i = 1; i <= Math.Min(from.Row, from.Col); i++)
         {
             var move = Square.At(from.Row - i, from.Col - i);
-            if (board.GetPiece(move) != null)
+            var piece = board.GetPiece(move);
+            if (piece != null)
             {
+                if (piece.Player != player)
+                {
+                    moves.Add(move);                    
+                }
+
                 break;
             }
             
@@ -120,8 +138,14 @@ public class PieceHelper
         for (int i = 1; i <= Math.Min(from.Row, 7 - from.Col); i++)
         {
             var move = Square.At(from.Row - i, from.Col + i);
-            if (board.GetPiece(move) != null)
+            var piece = board.GetPiece(move);
+            if (piece != null)
             {
+                if (piece.Player != player)
+                {
+                    moves.Add(move);                    
+                }
+
                 break;
             }
             

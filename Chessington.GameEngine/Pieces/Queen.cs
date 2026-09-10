@@ -13,9 +13,8 @@ namespace Chessington.GameEngine.Pieces
             IEnumerable<Square> moves = new List<Square>();
             var queen = board.FindPiece(this);
             
-            moves = moves.Concat(PieceHelper.GetAvailableLateralMoves(board, queen));
-            moves = moves.Concat(PieceHelper.GetAvailableDiagonalMoves(board, queen));
             moves = moves.Concat(PieceHelper.GetAvailableLateralMoves(Player, board, queen));
+            moves = moves.Concat(PieceHelper.GetAvailableDiagonalMoves(Player, board, queen));
             
             return moves;
         }
