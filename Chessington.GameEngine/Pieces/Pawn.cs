@@ -22,6 +22,18 @@ namespace Chessington.GameEngine.Pieces
                     moves.Add(Square.At(pawn.Row + 1, pawn.Col));
                     break;
             }
+            
+            switch (Player)
+            {
+                case Player.White:
+                    if (pawn.Row == 7)
+                        moves.Add(Square.At(pawn.Row - 2, pawn.Col));
+                    break;
+                case Player.Black:
+                    if (pawn.Row == 1)
+                        moves.Add(Square.At(pawn.Row + 2, pawn.Col));
+                    break;
+            }
 
             return moves;
         }
