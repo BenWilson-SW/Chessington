@@ -27,7 +27,12 @@ namespace Chessington.GameEngine.Pieces
 
             foreach (var (row, col) in kingMoveOffsets)
             {
-                moves.Add(Square.At(king.Row + row, king.Col + col));
+                var move = Square.At(king.Row + row, king.Col + col);
+
+                if (board.InBounds(move))
+                {
+                    moves.Add(move);                    
+                }
             }
             
             return moves;

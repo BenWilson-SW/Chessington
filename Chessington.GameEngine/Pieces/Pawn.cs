@@ -18,7 +18,7 @@ namespace Chessington.GameEngine.Pieces
 
             var move = Square.At(pawn.Row + direction, pawn.Col);
             
-            if (board.GetPiece(move) != null)
+            if (!board.InBounds(move) || board.GetPiece(move) != null)
             {
                 return moves;
             }
@@ -32,7 +32,7 @@ namespace Chessington.GameEngine.Pieces
             
             move = Square.At(pawn.Row + 2 * direction, pawn.Col);
             
-            if (board.GetPiece(move) != null)
+            if (!board.InBounds(move) || board.GetPiece(move) != null)
             {
                 return moves;
             }

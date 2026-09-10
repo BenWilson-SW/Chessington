@@ -27,7 +27,12 @@ namespace Chessington.GameEngine.Pieces
             
             foreach (var (rows, cols) in knightMoveOffsets)
             {
-                moves.Add(Square.At(knight.Row + rows, knight.Col + cols));
+                var move = Square.At(knight.Row + rows, knight.Col + cols);
+
+                if (board.InBounds(move))
+                {
+                    moves.Add(move);                    
+                }
             }
             
             return moves;
