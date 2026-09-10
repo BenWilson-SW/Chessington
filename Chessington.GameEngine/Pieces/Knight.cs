@@ -29,10 +29,19 @@ namespace Chessington.GameEngine.Pieces
             {
                 var move = Square.At(knight.Row + rows, knight.Col + cols);
 
-                if (board.InBounds(move))
+                if (!board.InBounds(move))
                 {
-                    moves.Add(move);                    
+                    continue;
                 }
+
+                var piece = board.GetPiece(move);
+
+                if (piece != null && piece.Player == Player)
+                {
+                    continue;
+                }
+                
+                moves.Add(move);
             }
             
             return moves;
