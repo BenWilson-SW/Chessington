@@ -13,26 +13,14 @@ namespace Chessington.GameEngine.Pieces
             var moves = new List<Square>();
             var pawn = board.FindPiece(this);
 
-            switch (Player)
-            {
-                case Player.White:
-                    moves.Add(Square.At(pawn.Row - 1, pawn.Col));
-                    break;
-                case Player.Black:
-                    moves.Add(Square.At(pawn.Row + 1, pawn.Col));
-                    break;
-            }
+            var direction = Player == Player.White ? -1 : 1;
+            var startRow = Player == Player.White ? 7 : 1;
             
-            switch (Player)
+            moves.Add(Square.At(pawn.Row + direction, pawn.Col));
+
+            if (pawn.Row == startRow)
             {
-                case Player.White:
-                    if (pawn.Row == 7)
-                        moves.Add(Square.At(pawn.Row - 2, pawn.Col));
-                    break;
-                case Player.Black:
-                    if (pawn.Row == 1)
-                        moves.Add(Square.At(pawn.Row + 2, pawn.Col));
-                    break;
+                moves.Add(Square.At(pawn.Row + 2 * direction, pawn.Col));                
             }
 
             return moves;
