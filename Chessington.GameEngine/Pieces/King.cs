@@ -28,11 +28,20 @@ namespace Chessington.GameEngine.Pieces
             foreach (var (row, col) in kingMoveOffsets)
             {
                 var move = Square.At(king.Row + row, king.Col + col);
-
-                if (board.InBounds(move))
+                
+                if (!board.InBounds(move))
                 {
-                    moves.Add(move);                    
+                    continue;
                 }
+                
+                var piece = board.GetPiece(move);
+
+                if (piece != null && piece.Player == Player)
+                {
+                    continue;
+                }
+                
+                moves.Add(move);
             }
             
             return moves;
