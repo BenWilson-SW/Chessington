@@ -5,28 +5,52 @@ namespace Chessington.GameEngine.Pieces;
 
 public class PieceHelper
 {
-    public static IEnumerable<Square> GetAvailableLateralMoves(Square from)
+    public static IEnumerable<Square> GetAvailableLateralMoves(Board board, Square from)
     {
         var moves = new List<Square>();
 
         for (int col = 0; col < from.Col; col++)
         {
-            moves.Add(Square.At(from.Row, col));
+            var move = Square.At(from.Row, col);
+            if (board.GetPiece(move) != null)
+            {
+                break;
+            }
+            
+            moves.Add(move);
         }
             
         for (int col = from.Col + 1; col < 8; col++)
         {
-            moves.Add(Square.At(from.Row, col));
+            var move = Square.At(from.Row, col);
+            if (board.GetPiece(move) != null)
+            {
+                break;
+            }
+            
+            moves.Add(move);
         }
             
         for (int row = 0; row < from.Row; row++)
         {
-            moves.Add(Square.At(row, from.Col));
+            var move = Square.At(row, from.Col);
+            if (board.GetPiece(move) != null)
+            {
+                break;
+            }
+            
+            moves.Add(move);
         }
             
         for (int row = from.Row + 1; row < 8; row++)
         {
-            moves.Add(Square.At(row, from.Col));
+            var move = Square.At(row, from.Col);
+            if (board.GetPiece(move) != null)
+            {
+                break;
+            }
+            
+            moves.Add(move);
         }
 
         return moves;        
