@@ -14,7 +14,7 @@ namespace Chessington.GameEngine.Pieces
             var pawn = board.FindPiece(this);
 
             var direction = Player == Player.White ? -1 : 1;
-            var startRow = Player == Player.White ? 7 : 1;
+            var startRow = Player == Player.White ? 6 : 1;
             
             moves.Add(Square.At(pawn.Row + direction, pawn.Col));
 
