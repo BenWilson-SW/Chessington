@@ -9,7 +9,7 @@ public class PieceHelper
     {
         var moves = new List<Square>();
 
-        for (var col = 0; col < from.Col; col++)
+        for (var col = from.Col - 1; col >= 0; col--)
         {
             var move = Square.At(from.Row, col);
             var piece = board.GetPiece(move);
@@ -43,7 +43,7 @@ public class PieceHelper
             moves.Add(move);
         }
             
-        for (var row = 0; row < from.Row; row++)
+        for (var row = from.Row - 1; row >= 0; row--)
         {
             var move = Square.At(row, from.Col);
             var piece = board.GetPiece(move);
