@@ -201,5 +201,163 @@ namespace Chessington.GameEngine.Tests.Pieces
             moves.Should().NotContain(Square.At(6, 2));
             moves.Should().NotContain(Square.At(6, 4));
         }
+
+        [Test]
+        public void WhitePawns_CanMoveDiagonally_ViaEnPassant()
+        {
+            var board = new Board(Player.Black);
+            var whitePawn = new Pawn(Player.White);
+            var blackPawn = new Pawn(Player.Black);
+            board.AddPiece(Square.At(3, 3), whitePawn);
+            board.AddPiece(Square.At(1, 4), blackPawn);
+
+            blackPawn.MoveTo(board, Square.At(3, 4));
+            var moves = whitePawn.GetAvailableMoves(board).ToList();
+
+            moves.Should().Contain(Square.At(2, 4));
+        }
+
+        [Test]
+        public void BlackPawns_CanMoveDiagonally_ViaEnPassant()
+        {
+            var board = new Board(Player.White);
+            var blackPawn = new Pawn(Player.Black);
+            var whitePawn = new Pawn(Player.White);
+            board.AddPiece(Square.At(4, 3), blackPawn);
+            board.AddPiece(Square.At(6, 4), whitePawn);
+
+            whitePawn.MoveTo(board, Square.At(4, 4));
+            var moves = blackPawn.GetAvailableMoves(board).ToList();
+
+            moves.Should().Contain(Square.At(5, 4));
+        }
+
+        [Test]
+        public void WhitePawns_CannotMoveDiagonally_ViaEnPassant_IfNoAdjacentPawn()
+        {
+            var board = new Board();
+            var whitePawn = new Pawn(Player.White);
+            board.AddPiece(Square.At(3, 3), whitePawn);
+
+            var moves = whitePawn.GetAvailableMoves(board).ToList();
+
+            moves.Should().NotContain(Square.At(2, 2));
+            moves.Should().NotContain(Square.At(2, 4));
+        }
+
+        [Test]
+        public void BlackPawns_CannotMoveDiagonally_ViaEnPassant_IfNoAdjacentPawn()
+        {
+            var board = new Board();
+            var blackPawn = new Pawn(Player.Black);
+            board.AddPiece(Square.At(4, 3), blackPawn);
+
+            var moves = blackPawn.GetAvailableMoves(board).ToList();
+
+            moves.Should().NotContain(Square.At(5, 2));
+            moves.Should().NotContain(Square.At(5, 4));
+        }
+
+        [Test]
+        public void WhitePawns_CannotMoveDiagonally_ViaEnPassant_IfAdjacentPawnDidNotMove()
+        {
+            var board = new Board();
+            var whitePawn = new Pawn(Player.White);
+            var blackPawn = new Pawn(Player.Black);
+            board.AddPiece(Square.At(3, 3), whitePawn);
+            board.AddPiece(Square.At(3, 4), blackPawn);
+
+            var moves = whitePawn.GetAvailableMoves(board).ToList();
+
+            moves.Should().NotContain(Square.At(2, 4));
+        }
+
+        [Test]
+        public void BlackPawns_CannotMoveDiagonally_ViaEnPassant_IfAdjacentPawnDidNotMove()
+        {
+            var board = new Board();
+            var blackPawn = new Pawn(Player.Black);
+            var whitePawn = new Pawn(Player.White);
+            board.AddPiece(Square.At(4, 3), blackPawn);
+            board.AddPiece(Square.At(4, 4), whitePawn);
+
+            var moves = blackPawn.GetAvailableMoves(board).ToList();
+
+            moves.Should().NotContain(Square.At(5, 4));
+        }
+
+        [Test]
+        public void WhitePawns_CannotMoveDiagonally_ViaEnPassant_IfAdjacentPawnOnlyMovedOneSquare()
+        {
+            var board = new Board(Player.Black);
+            var whitePawn = new Pawn(Player.White);
+            var blackPawn = new Pawn(Player.Black);
+            board.AddPiece(Square.At(3, 3), whitePawn);
+            board.AddPiece(Square.At(2, 4), blackPawn);
+
+            blackPawn.MoveTo(board, Square.At(3, 4));
+            var moves = whitePawn.GetAvailableMoves(board).ToList();
+
+            moves.Should().NotContain(Square.At(2, 4));
+        }
+
+        [Test]
+        public void BlackPawns_CannotMoveDiagonally_ViaEnPassant_IfAdjacentPawnOnlyMovedOneSquare()
+        {
+            var board = new Board(Player.White);
+            var blackPawn = new Pawn(Player.Black);
+            var whitePawn = new Pawn(Player.White);
+            board.AddPiece(Square.At(4, 3), blackPawn);
+            board.AddPiece(Square.At(5, 4), whitePawn);
+
+            whitePawn.MoveTo(board, Square.At(4, 4));
+            var moves = blackPawn.GetAvailableMoves(board).ToList();
+
+            moves.Should().NotContain(Square.At(5, 4));
+        }
+
+        [Test]
+        public void WhitePawns_CannotMoveDiagonally_ViaEnPassant_IfOpportunityNotTakenImmediately()
+        {
+            var board = new Board(Player.Black);
+            var whitePawn = new Pawn(Player.White);
+            var blackPawn = new Pawn(Player.Black);
+            var whiteRook = new Rook(Player.White);
+            var blackRook = new Rook(Player.Black);
+            board.AddPiece(Square.At(3, 3), whitePawn);
+            board.AddPiece(Square.At(1, 4), blackPawn);
+            board.AddPiece(Square.At(7, 0), whiteRook);
+            board.AddPiece(Square.At(0, 0), blackRook);
+
+            blackPawn.MoveTo(board, Square.At(3, 4));
+            whiteRook.MoveTo(board, Square.At(6, 0));
+            blackRook.MoveTo(board, Square.At(1, 0));
+
+            var moves = whitePawn.GetAvailableMoves(board).ToList();
+
+            moves.Should().NotContain(Square.At(2, 4));
+        }
+
+        [Test]
+        public void BlackPawns_CannotMoveDiagonally_ViaEnPassant_IfOpportunityNotTakenImmediately()
+        {
+            var board = new Board(Player.White);
+            var blackPawn = new Pawn(Player.Black);
+            var whitePawn = new Pawn(Player.White);
+            var blackRook = new Rook(Player.Black);
+            var whiteRook = new Rook(Player.White);
+            board.AddPiece(Square.At(4, 3), blackPawn);
+            board.AddPiece(Square.At(6, 4), whitePawn);
+            board.AddPiece(Square.At(0, 0), blackRook);
+            board.AddPiece(Square.At(7, 0), whiteRook);
+
+            whitePawn.MoveTo(board, Square.At(4, 4));
+            blackRook.MoveTo(board, Square.At(1, 0));
+            whiteRook.MoveTo(board, Square.At(6, 0));
+
+            var moves = blackPawn.GetAvailableMoves(board).ToList();
+
+            moves.Should().NotContain(Square.At(5, 4));
+        }
     }
 }
